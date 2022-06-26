@@ -182,7 +182,7 @@ const Banner = () => {
 				</h5>
 				</div>
 				{currentAccount ? mintNftButton() : connectWalletButton()}
-				<br/> <p style={{align: 'center', color: 'white'}}>{dispMsg}</p> 
+				
 			</div>
 
 			</div>
