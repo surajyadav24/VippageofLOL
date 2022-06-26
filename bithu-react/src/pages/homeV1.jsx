@@ -14,7 +14,7 @@ import Footer from "../components/section/footer/v1";
 import MintNowModal from "../common/modal/mintNowModal";
 import WalletModal from "../common/modal/walletModal/WalletModal";
 import About from "../components/section/about/v1";
-import Smartcontract from "../components/section/smartcontract/Smartcontract";
+// import Smartcontract from "../components/section/smartcontract/Smartcontract";
 const HomeV1 = () => {
   const { visibility, walletModalvisibility } = useModal();
   return (
