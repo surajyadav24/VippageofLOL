@@ -1,37 +1,51 @@
-import SectionTitle from "../../../../common/sectionTitle";
 
 import AboutInfoCardList from "../aboutInfoCardList";
 
 import data from "../../../../assets/data/about/aboutv1";
-import aboutThumb1 from "../../../../assets/images/nft/about_us_img1.png";
-import aboutThumb2 from "../../../../assets/images/nft/about_us_img2.png";
+import sectionTitleShape from "../../../../assets/images/icon/title_shapes.svg";
+import sectionTitleShape2 from "../../../../assets/images/icon/title_shapes2.svg";
 import AboutStyleWrapper from "./About.style";
-import land from "../../../../assets/images/lands/Lands 02.png"
+import lords from "../../../../assets/images/lords/3lords.png"
 
 const About = () => {
   const { } = data;
   return (
     <AboutStyleWrapper id="about">
       <div className="container">
-        <div className="row ">
-          <div className="col-md-6">
+        <div className="row d-flex flex-wrap-reverse ">
+          
+          <div className="col-md-12">
             <div className="v1_about_us_right_sect">
-              <SectionTitle title="ABOUT US" subtitle=" " />
+       {/* <div className="heading-abt1"><img src={sectionTitleShape} alt="" />
+       About us<img src={sectionTitleShape2} alt="" /></div> */}
               <div className="v1_about_us_right_text">
-                <p>
+                {/* <p>
+                Welcome to the World of Future Billionaires
 
-                  Lords Of The Lands is a metaverse of the futuristic medieval era ruled by the Billionaires of the world called, Lords who come to this metaverse to claim their Lordship in the form of Land NFTs where the future of Entertainment, Music Festivals, Sports will come together.
-
-                  LOL is built on the Ethereum Blockchain and can be accessed through Website, Android & IOS Apps and Virtual Reality Apps.
-
-                  LOL is on a mission to create utilities in the Metaverse space and make Music, shopping, Entertainment accessible to millions of Users sitting at the comfort of their homes.
                 </p>
+                <p>
+                LOL is a utility-driven metaverse ecosystem allowing its NFT holders to monetize their virtual lands and earn monthly rentals. LOL Metaverse is built on unity & powered by Ethereum blockchain, will be available on Web, IOS, Android as well as VR Apps.
+
+                </p>
+                <p>
+                  
+In the project’s first presale, Lords of the Lands is bringing a Collection of 255 Lords and 300 Land NFTs. 
+
+                </p>
+                <p>
+                To become the VVIP Whitelister, Mint your whitelisting spot today!
+
+                </p>
+                <p>
+                Our VVIP Whitelisters will not only have guaranteed access to the genesis mint of both Land and Lord NFT at a discounted mint price but will also enjoy unlimited perks in the LOL universe.
+
+                </p> */}
               </div>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-12">
             <div className="v1_about_us_left_sect sm-mt-60">
-<img src={land} alt="" />
+<img src={lords} alt="" />
            
             </div>
           </div>

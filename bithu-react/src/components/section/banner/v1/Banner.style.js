@@ -13,13 +13,33 @@ to {
 
 const BannerV1Wrapper = styled.section`
 	background: url(${sectionBgImage});
-	min-height: 950px;
 	width: 100%;
 	background-size: cover;
 	background-position: top center;
 	background-repeat: no-repeat;
-	padding-top: 192px;
+	padding-top: 120px;
+.vip-pass{
+	animation: float 6s ease-in-out infinite;
+    margin-top: 35px;
+}
+@keyframes float {
+	0% {
+	
+		transform: translatey(0px);
+	}
+	50% {
+		
+		transform: translatey(-20px);
+	}
+	100% {
+	
+		transform: translatey(0px);
+	}
+}
+#home{
 
+
+}
   .footer_shapes_left {
           left: 0px;
           top: 0px;
@@ -43,6 +63,7 @@ const BannerV1Wrapper = styled.section`
 
 	.lolbanner-con {
 		h5 {
+			font-size:28px;
 			font-family: "Bakbak One";
 	    background: linear-gradient( 85deg, rgb(255 153 0) 38.16%, #f5960c 35.6%, #ffdaa4 53.01%, rgb(239 174 77 / 94%) 49.5% );
 			-webkit-background-clip: text;
@@ -238,6 +259,22 @@ word-spacing:"0.5px"
 	}
 
 	@media only screen and (max-width: 480px) {
+		.lolbanner-con{
+			.footer_shapes_right{
+				display:none
+			}
+			.shape_left{
+				display:none;
+			}
+			h5{
+				text-align:center;
+				font-size:18px;
+			}
+			h2{
+				font-size:16px;
+			}
+		}
+
 		.bithu_v1_baner_left {
 			h2 {
 				font-size: 37px;

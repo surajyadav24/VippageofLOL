@@ -7,9 +7,13 @@ export default function Mintbutton() {
                 <div className="row">
                     <div className="mintbtn-erap">
                         <button className="inner-mintbtn">
-                            <p>
+                            <link to={{ pathname: "https://www.premint.xyz/LOL/" }}></link>
+                            <h2 className='mt-0'>
                                 MINT NOW
-                            </p>
+                            </h2>
+                            <h5>
+                            
+                            </h5>
                         </button>
                     </div>
                 </div>

@@ -10,13 +10,14 @@ const Mintbutton = styled.section`
 	.inner-mintbtn {
 		margin: 0 auto;
 		margin-top: 30px;
-		width: 200px;
-		height: 50px;
-		background: #2effe8;
+		width: 486px;
+		height: 82.55px;
+		background: #72FF79;
 		background-blend-mode: lighten;
-		border-radius: 27px;
+		border-radius: 13px;
 	
 		p {
+			font-weight:800;
 			display: flex;
 			padding-top: 12px;
 			color: #000;
