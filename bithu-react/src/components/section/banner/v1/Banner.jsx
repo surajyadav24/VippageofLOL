@@ -21,32 +21,84 @@ const contractAddress = "0xeb16a342412fa0fe674024e37d0924e2d18d2d26";
 const abi = ABI;
 
 const Banner = () => {
-  const { mintModalHandle } = useModal();
-  return (
-    <BannerV1Wrapper id="home">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="lolbanner-con">
-              {/* <h2>Claim your Lordship</h2> */}
-             
-              <h5>
+	const [currentAccount, setCurrentAccount] = useState(null);
+	const [dispMsg, setDispMsg] = useState("Connect Wallet");
+	// const { mintModalHandle } = useModal();
+	const providerOptions = {
+		walletconnect: {
+			package: WalletConnectProvider, // required
+			options: {
+			  infuraId: "f844d3ac39704d47ab46606968f926e9" // required
+			}
+		  	},
+		coinbasewallet: {
+			package: CoinbaseWalletSDK, // Required
+			options: {
+				appName: "LOL Loyalty NFT", // Required
+				infuraId: "f844d3ac39704d47ab46606968f926e9", // Required
+				rpc: "", // Optional if `infuraId` is provided; otherwise it's required
+				chainId: 1, // Optional. It defaults to 1 if not provided
+				darkMode: true // Optional. Use dark theme, defaults to false
+			}
+		},
+		binancechainwallet: {
+				package: true
+			},
+		portis: {
+				package: Portis, // required
+				options: {
+				  id: "f844d3ac39704d47ab46606968f926e9" // required
+				}
+			},
+		torus: {
+				package: Torus, // required
+				options: {
+				  networkParams: {
+					host: "https://www.vip.lordsofthelands.io", // optional
+					chainId: 1, // optional
+				  }
+				}
+			  },
+		opera: {
+				package: true
+			  }
+		
+		};
+		
+		const web3Modal = new Web3Modal({
+			network: "mainnet", // optional
+			cacheProvider: true, // optional
+			providerOptions, // required
+			theme: "dark"
+		});
 
-                <span className="footer_shapes_right">
-                  <img src={sectionTitleShape2} alt="bithu nft footer" />
-                </span>
-                Claim your Guaranteed  Whitelisting vip pass
-                <span className="shape_left"><img src={sectionTitleShape} /></span>
-              </h5>
-              <h2>
-              Only 200 pass Available
-              </h2>
-              <div className="vip-pass">
-                <img src={Vippass} alt="" />
-              </div>
-            </div>
-            <Mintbutton />
-          </div>
+//   const { mintModalHandle } = useModal();
+//   return (
+//     <BannerV1Wrapper id="home">
+//       <div className="container">
+//         <div className="row">
+//           <div className="col-lg-12">
+//             <div className="lolbanner-con">
+//               {/* <h2>Claim your Lordship</h2> */}
+             
+//               <h5>
+
+//                 <span className="footer_shapes_right">
+//                   <img src={sectionTitleShape2} alt="bithu nft footer" />
+//                 </span>
+//                 Claim your Guaranteed  Whitelisting vip pass
+//                 <span className="shape_left"><img src={sectionTitleShape} /></span>
+//               </h5>
+//               <h2>
+//               Only 200 pass Available
+//               </h2>
+//               <div className="vip-pass">
+//                 <img src={Vippass} alt="" />
+//               </div>
+//             </div>
+//             <Mintbutton />
+			
+//           </div>
 
 	const connectWalletHandler = async () => {
 		const provider = await web3Modal.connect();
