@@ -45,7 +45,10 @@ In the project’s first presale, Lords of the Lands is bringing a Collection of
           </div>
           <div className="col-md-12">
             <div className="v1_about_us_left_sect sm-mt-60">
-<img src={lords} alt="" />
+              <div className="banner-perk">
+              <img src={lords} alt="" />
+              </div>
+
            
             </div>
           </div>
