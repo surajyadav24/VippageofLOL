@@ -16,7 +16,8 @@ import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import Portis from "@portis/web3";
 import Torus from "@toruslabs/torus-embed";
 
-
+// Mainnet: 0xeb16a342412fa0fe674024e37d0924e2d18d2d26
+// Rinkeby: 0x322a5b5b5aF1C0DE84d7994AfcBAd87eBf6dbCAD
 const contractAddress = "0xeb16a342412fa0fe674024e37d0924e2d18d2d26";
 const abi = ABI;
 
@@ -106,9 +107,11 @@ const Banner = () => {
 		await window.ethereum.send("eth_requestAccounts");
 		var accounts = await web3.eth.getAccounts();
 		var account = accounts[0];
-		var contract = new web3.eth.Contract(abi, contractAddress)
 		setCurrentAccount(account);
         setDispMsg("Wallet Connected");
+		let balance = provider.getBalance(account);
+		console.log(balance);
+
 
 	}
 
@@ -123,12 +126,13 @@ const Banner = () => {
 		// var account = accounts[0];
 		// const signer = provider.getSigner();
 		var contract = new ethers.Contract(contractAddress, abi, signer);
-		let nftTxn = await contract.mintPass().catch((err) => {
+		let nftTxn = await contract.mintPass({ value: Web3.utils.toWei((0.06).toString(), 'ether') }).catch((err) => {
 			alert(err.message);
-			setDispMsg(err.message);
+			console.log(err)
+			// setDispMsg(err.message);
 		});
 		console.log(nftTxn);
-		setDispMsg(`Check Txn here https://etherscan.io/tx/${nftTxn.hash}`);
+		// setDispMsg(`Check Txn here https://etherscan.io/tx/${nftTxn.hash}`);
 
 	}
 	const checkWalletIsConnected = async () => {
@@ -167,7 +171,7 @@ const Banner = () => {
 	</div>
 	</Mintbuttonwrapper>
     )
-  } 
+  	} 
 
   const mintNftButton = () => {
     return (
@@ -184,7 +188,7 @@ const Banner = () => {
 			</div>
 		</Mintbuttonwrapper>
     )
-  }
+  	}
 
   useEffect(() => {
 	const interval = setInterval(() => {
