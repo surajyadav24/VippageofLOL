@@ -21,6 +21,13 @@ const BannerV1Wrapper = styled.section`
 .vip-pass{
 	animation: float 6s ease-in-out infinite;
     margin-top: 35px;
+	text-align:center;
+}
+.inner-mintbtn{
+	font-size:28px;
+	font-weight:800;
+	letter-spacing:0.5px;
+	cursor :pointer;
 }
 @keyframes float {
 	0% {

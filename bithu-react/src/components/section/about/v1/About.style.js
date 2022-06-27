@@ -153,7 +153,14 @@ const AboutStyleWrapper = styled.section`
 			border-radius: 50%;
 		}
 	}
+	.banner-perk{
+		width:600px;
+		height:100%;
+		margin:0 auto;
+	
+	}
 
+	
 	/* list */
 
 	.about_us_text_card_sect {
