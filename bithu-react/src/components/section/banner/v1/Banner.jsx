@@ -17,8 +17,8 @@ import Portis from "@portis/web3";
 import Torus from "@toruslabs/torus-embed";
 
 // Mainnet: 0xeb16a342412fa0fe674024e37d0924e2d18d2d26
-// Rinkeby: 0x322a5b5b5aF1C0DE84d7994AfcBAd87eBf6dbCAD
-const contractAddress = "0xeb16a342412fa0fe674024e37d0924e2d18d2d26";
+// Rinkeby: 0x986bFa12850fe12a28b4A56558a41362da3DF284
+const contractAddress = "0x986bFa12850fe12a28b4A56558a41362da3DF284";
 const abi = ABI;
 
 const Banner = () => {
@@ -38,7 +38,7 @@ const Banner = () => {
 				appName: "LOL Loyalty NFT", // Required
 				infuraId: "f844d3ac39704d47ab46606968f926e9", // Required
 				rpc: "", // Optional if `infuraId` is provided; otherwise it's required
-				chainId: 1, // Optional. It defaults to 1 if not provided
+				chainId: 4, // Optional. It defaults to 1 if not provided
 				darkMode: true // Optional. Use dark theme, defaults to false
 			}
 		},
@@ -56,7 +56,7 @@ const Banner = () => {
 				options: {
 				  networkParams: {
 					host: "https://www.vip.lordsofthelands.io", // optional
-					chainId: 1, // optional
+					chainId: 4, // optional
 				  }
 				}
 			  },
@@ -67,7 +67,7 @@ const Banner = () => {
 		};
 		
 		const web3Modal = new Web3Modal({
-			network: "mainnet", // optional
+			network: "rinkeby", // optional
 			cacheProvider: true, // optional
 			providerOptions, // required
 			theme: "dark"
@@ -104,6 +104,7 @@ const Banner = () => {
 	const connectWalletHandler = async () => {
 		const provider = await web3Modal.connect();
 		const web3 = new Web3(provider);
+		console.log("provider", provider);
 		await window.ethereum.send("eth_requestAccounts");
 		var accounts = await web3.eth.getAccounts();
 		var account = accounts[0];
@@ -111,6 +112,7 @@ const Banner = () => {
         setDispMsg("Wallet Connected");
 		let balance = provider.getBalance(account);
 		console.log(balance);
+		
 
 
 	}
@@ -126,7 +128,7 @@ const Banner = () => {
 		// var account = accounts[0];
 		// const signer = provider.getSigner();
 		var contract = new ethers.Contract(contractAddress, abi, signer);
-		let nftTxn = await contract.mintPass({ value: Web3.utils.toWei((0.06).toString(), 'ether') }).catch((err) => {
+		let nftTxn = await contract.mintPass().send({value:Web3.utils.toWei("1", 'ether')}).catch((err) => {
 			alert(err.message);
 			console.log(err)
 			// setDispMsg(err.message);
@@ -162,7 +164,7 @@ const Banner = () => {
 		<div className="row">
 			<div className="mintbtn-erap">
 				<button className="inner-mintbtn" onClick={( async () => { await connectWalletHandler()
-				window.location.reload(false);
+				window.location.reload(true);
 				})}>
 					Connect Wallet
 				</button>
