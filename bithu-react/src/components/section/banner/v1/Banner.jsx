@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import Web3 from 'web3';
 import {ABI} from './ABI'; 
 import { ethers } from 'ethers';
-import { useModal } from "../../../../utils/ModalContext";
+// import { useModal } from "../../../../utils/ModalContext";
 import BannerV1Wrapper from "./Banner.style";
-import Mintbutton from "../../mintbutton/Mintbutton";
-import Vippass from"../../../../assets/images/vippass/vippass.png"
-import SectionTitle from "../../../../common/sectionTitle";
+// import Mintbutton from "../../mintbutton/Mintbutton";
+// import Vippass from"../../../../assets/images/vippass/vippass.png"
+// import SectionTitle from "../../../../common/sectionTitle";
 import sectionTitleShape from "../../../../assets/images/icon/title_shapes.svg";
 import sectionTitleShape2 from "../../../../assets/images/icon/title_shapes2.svg";
 import Web3Modal from "web3modal";
@@ -18,7 +18,7 @@ import Torus from "@toruslabs/torus-embed";
 
 // Mainnet: 0xeb16a342412fa0fe674024e37d0924e2d18d2d26
 // Rinkeby: 0x986bFa12850fe12a28b4A56558a41362da3DF284
-const contractAddress = "0x986bFa12850fe12a28b4A56558a41362da3DF284";
+const contractAddress = "0xeb16a342412fa0fe674024e37d0924e2d18d2d26";
 const abi = ABI;
 
 const Banner = () => {
@@ -38,7 +38,7 @@ const Banner = () => {
 				appName: "LOL Loyalty NFT", // Required
 				infuraId: "f844d3ac39704d47ab46606968f926e9", // Required
 				rpc: "", // Optional if `infuraId` is provided; otherwise it's required
-				chainId: 4, // Optional. It defaults to 1 if not provided
+				chainId: 1, // Optional. It defaults to 1 if not provided
 				darkMode: true // Optional. Use dark theme, defaults to false
 			}
 		},
@@ -56,7 +56,7 @@ const Banner = () => {
 				options: {
 				  networkParams: {
 					host: "https://www.vip.lordsofthelands.io", // optional
-					chainId: 4, // optional
+					chainId: 1, // optional
 				  }
 				}
 			  },
@@ -67,7 +67,7 @@ const Banner = () => {
 		};
 		
 		const web3Modal = new Web3Modal({
-			network: "rinkeby", // optional
+			network: "mainnet", // optional
 			cacheProvider: true, // optional
 			providerOptions, // required
 			theme: "dark"
@@ -110,10 +110,7 @@ const Banner = () => {
 		var account = accounts[0];
 		setCurrentAccount(account);
         setDispMsg("Wallet Connected");
-		let balance = provider.getBalance(account);
-		console.log(balance);
-		
-
+		window.location.reload()
 
 	}
 
@@ -121,6 +118,10 @@ const Banner = () => {
 		const instance = await web3Modal.connect();
 		const provider = new ethers.providers.Web3Provider(instance);
 		const signer = provider.getSigner();
+		const chainId = await provider.getNetwork()
+		const balance = await provider.getBalance(await signer.getAddress())
+		if (chainId.chainId !== 1) {return alert("Incorrect Network. Switch to Ethereum Mainnet")}
+		if (ethers.utils.formatEther(balance) < 0.06) {return alert("Insufficient Amount")}
 		// const provider = await web3Modal.connect();
 		// const web3 = new Web3(provider);
 		// await window.ethereum.send("eth_requestAccounts");
@@ -128,12 +129,11 @@ const Banner = () => {
 		// var account = accounts[0];
 		// const signer = provider.getSigner();
 		var contract = new ethers.Contract(contractAddress, abi, signer);
-		let nftTxn = await contract.mintPass().send({value:Web3.utils.toWei("1", 'ether')}).catch((err) => {
+		let nftTxn = await contract.mintPass({value: ethers.utils.parseUnits("0.06", 'ether')}).catch((err) => {
 			alert(err.message);
 			console.log(err)
 			// setDispMsg(err.message);
 		});
-		console.log(nftTxn);
 		// setDispMsg(`Check Txn here https://etherscan.io/tx/${nftTxn.hash}`);
 
 	}
@@ -164,7 +164,7 @@ const Banner = () => {
 		<div className="row">
 			<div className="mintbtn-erap">
 				<button className="inner-mintbtn" onClick={( async () => { await connectWalletHandler()
-				window.location.reload(true);
+				await window.location.reload();
 				})}>
 					Connect Wallet
 				</button>
@@ -195,7 +195,7 @@ const Banner = () => {
   useEffect(() => {
 	const interval = setInterval(() => {
 		checkWalletIsConnected();
-		}, 3000);
+		}, 2000);
 	return () => clearInterval(interval);
   }, [])
  	return (
