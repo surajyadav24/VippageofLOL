@@ -11,8 +11,8 @@ import Banner from "../components/section/banner/v1";
 // import Team from "../components/section/team/v1";
 // import FAQ from "../components/section/faq/v1";
 import Footer from "../components/section/footer/v1";
-import MintNowModal from "../common/modal/mintNowModal";
-import WalletModal from "../common/modal/walletModal/WalletModal";
+// import MintNowModal from "../common/modal/mintNowModal";
+// import WalletModal from "../common/modal/walletModal/WalletModal";
 import About from "../components/section/about/v1";
 // import Smartcontract from "../components/section/smartcontract/Smartcontract";
 const HomeV1 = () => {
@@ -20,11 +20,11 @@ const HomeV1 = () => {
   return (
     <Layout>
       <GlobalStyles />
-      {visibility && <MintNowModal />}
-      {walletModalvisibility && <WalletModal />}
+      {/* {visibility && <MintNowModal />}
+      {walletModalvisibility && <WalletModal />} */}
       <Header />
       <Banner />
- 
+
       {/* <Smartcontract /> */}
       <About />
       <Footer />
