@@ -2,19 +2,19 @@ import React, {useState, useEffect} from 'react';
 import Web3 from 'web3';
 import {ABI} from './ABI'; 
 import { ethers } from 'ethers';
-// import { useModal } from "../../../../utils/ModalContext";
 import BannerV1Wrapper from "./Banner.style";
-// import Mintbutton from "../../mintbutton/Mintbutton";
 import Vippass from"../../../../assets/images/vippass/vippass.png"
 // import SectionTitle from "../../../../common/sectionTitle";
 import sectionTitleShape from "../../../../assets/images/icon/title_shapes.svg";
-import sectionTitleShape2 from "../../../../assets/images/icon/title_shapes2.svg";
-import Web3Modal from "web3modal";
 import Mintbuttonwrapper from '../../mintbutton/Mintbutton.style';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import Portis from "@portis/web3";
 import Torus from "@toruslabs/torus-embed";
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { SnackbarProvider, useSnackbar } from 'notistack';
 
 // Mainnet: 0xeb16a342412fa0fe674024e37d0924e2d18d2d26
 // Rinkeby: 0x986bFa12850fe12a28b4A56558a41362da3DF284
@@ -22,9 +22,26 @@ const contractAddress = "0xeb16a342412fa0fe674024e37d0924e2d18d2d26";
 const abi = ABI;
 
 const Banner = () => {
+	const { enqueueSnackbar } = useSnackbar();
 	const [currentAccount, setCurrentAccount] = useState(null);
-	const [dispMsg, setDispMsg] = useState("Connect Wallet");
-	// const { mintModalHandle } = useModal();
+	const [dispMsg, setDispMsg] = useState("");
+	const [state, setState] = React.useState({
+		vertical: 'top',
+		horizontal: 'center',
+	  });
+	const { vertical, horizontal} = state;
+	const [open, setOpen] = useState(false);
+
+	const handleClick = (data) => {
+		enqueueSnackbar(data, { variant: "info" }, { persist: true });
+	  };
+	
+	  const handleClickVariant = (data, variant) => {
+		// variant could be success, error, warning, info, or default
+		enqueueSnackbar(data , { variant: variant }, { persist: true });
+	  };
+	  
+		
 	const providerOptions = {
 		walletconnect: {
 			package: WalletConnectProvider, // required
@@ -68,112 +85,41 @@ const Banner = () => {
 		
 		const web3Modal = new Web3Modal({
 			network: "mainnet", // optional
-			cacheProvider: true, // optional
+			cacheProvider: false, // optional
 			providerOptions, // required
-			theme: "dark"
+			theme: "dark",
+			toggleModal: true
 		});
-
-//   const { mintModalHandle } = useModal();
-//   return (
-//     <BannerV1Wrapper id="home">
-//       <div className="container">
-//         <div className="row">
-//           <div className="col-lg-12">
-//             <div className="lolbanner-con">
-//               {/* <h2>Claim your Lordship</h2> */}
-             
-//               <h5>
-
-//                 <span className="footer_shapes_right">
-//                   <img src={sectionTitleShape2} alt="bithu nft footer" />
-//                 </span>
-//                 Claim your Guaranteed  Whitelisting vip pass
-//                 <span className="shape_left"><img src={sectionTitleShape} /></span>
-//               </h5>
-//               <h2>
-//               Only 200 pass Available
-//               </h2>
-//               <div className="vip-pass">
-//                 <img src={Vippass} alt="" />
-//               </div>
-//             </div>
-//             <Mintbutton />
-			
-//           </div>
-
-	const connectWalletHandler = async () => {
-		const provider = await web3Modal.connect();
-		const web3 = new Web3(provider);
-		console.log("provider", provider);
-		await window.ethereum.send("eth_requestAccounts");
-		var accounts = await web3.eth.getAccounts();
-		var account = accounts[0];
-		setCurrentAccount(account);
-        setDispMsg("Wallet Connected");
-		window.location.reload()
-
-	}
 
 	const mintNftHandler = async () => {
 		const instance = await web3Modal.connect();
 		const provider = new ethers.providers.Web3Provider(instance);
+		setDispMsg("Connecting to wallet")
+		handleClick("Connecting to wallet");
 		const signer = provider.getSigner();
 		const chainId = await provider.getNetwork()
 		const balance = await provider.getBalance(await signer.getAddress())
-		if (chainId.chainId !== 1) {return alert("Incorrect Network. Switch to Ethereum Mainnet")}
-		if (ethers.utils.formatEther(balance) < 0.06) {return alert("Insufficient Amount")}
-		// const provider = await web3Modal.connect();
-		// const web3 = new Web3(provider);
-		// await window.ethereum.send("eth_requestAccounts");
-		// var accounts = await web3.eth.getAccounts();
-		// var account = accounts[0];
-		// const signer = provider.getSigner();
+		if (chainId.chainId !== 1) {
+			web3Modal.clearCachedProvider();
+			handleClickVariant("Incorrect Network. Switch to Ethereum Mainnet",'error')
+			return setDispMsg("Incorrect Network. Switch to Ethereum Mainnet")}
+		if (ethers.utils.formatEther(balance) < 0.06) {
+			web3Modal.clearCachedProvider();
+			handleClickVariant("Insufficient Amount",'error')
+			return setDispMsg("Insufficient Amount")}
 		var contract = new ethers.Contract(contractAddress, abi, signer);
+		setDispMsg("Minting your VIP Pass");
+		handleClick("Minting your VIP Pass");
 		let nftTxn = await contract.mintPass({value: ethers.utils.parseUnits("0.06", 'ether')}).catch((err) => {
-			alert(err.message);
-			console.log(err)
-			// setDispMsg(err.message);
+			setDispMsg(err.message);
+			handleClickVariant(err.message, 'error');
 		});
-		// setDispMsg(`Check Txn here https://etherscan.io/tx/${nftTxn.hash}`);
+		setDispMsg(`VIP Pass Minted ... Check Txn here https://etherscan.io/tx/${nftTxn.hash}`);
+		handleClickVariant(`VIP Pass MintedCheck}`, 'success')
+		handleClick(`Check Txn here https://etherscan.io/tx/${nftTxn.hash}`)
+		web3Modal.clearCachedProvider();
 
 	}
-	const checkWalletIsConnected = async () => {
-		const {ethereum} = window;
-		if (!ethereum) {
-			setDispMsg("Wallet Not Connected");
-			// return alert("Wallet is not connected")
-			}
-		const accounts = await ethereum.request({method: "eth_accounts"});
-			setCurrentAccount(accounts[0]);
-			// console.log(accounts);
-		
-		if(accounts.length !== 0) {
-			const account = accounts[0]; 
-			setCurrentAccount(account);
-			// setDispMsg("Wallet Connected");
-			// return alert("Wallet is connected !");
-		} else {
-			setDispMsg("Account Not Found");
-			// return alert("Account Not Found !")
-		}
-	}
-  const connectWalletButton = () => {
-    return (
-		<Mintbuttonwrapper>
-		<div className="container">
-		<div className="row">
-			<div className="mintbtn-erap">
-				<button className="inner-mintbtn" onClick={( async () => { await connectWalletHandler()
-				await window.location.reload();
-				})}>
-					Connect Wallet
-				</button>
-			</div>
-		</div>
-	</div>
-	</Mintbuttonwrapper>
-    )
-  	} 
 
   const mintNftButton = () => {
     return (
@@ -192,12 +138,6 @@ const Banner = () => {
     )
   	}
 
-  useEffect(() => {
-	const interval = setInterval(() => {
-		checkWalletIsConnected();
-		}, 2000);
-	return () => clearInterval(interval);
-  }, [])
  	return (
 		<BannerV1Wrapper id="home">
 		<div className="container">
@@ -218,14 +158,16 @@ const Banner = () => {
                  <img src={Vippass} alt="" />
             </div>
 				</div>
-				{currentAccount ? mintNftButton() : connectWalletButton()}
+				{mintNftButton()}
 				
 			</div>
 
 			</div>
 		</div>
 		</BannerV1Wrapper>
+		
 	);
+	
 };
 
 export default Banner;
