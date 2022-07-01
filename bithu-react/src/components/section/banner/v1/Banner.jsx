@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react';
 import Web3 from 'web3';
 import {ABI} from './ABI'; 
 import { ethers } from 'ethers';
+import vippass from "../../../../assets/images/vippass/vippass.png"
 import BannerV1Wrapper from "./Banner.style";
-import Vippass from"../../../../assets/images/vippass/vippass.png"
-// import SectionTitle from "../../../../common/sectionTitle";
 import sectionTitleShape from "../../../../assets/images/icon/title_shapes.svg";
+import sectionTitleShape2 from "../../../../assets/images/icon/title_shapes2.svg";
+import Web3Modal from "web3modal";
 import Mintbuttonwrapper from '../../mintbutton/Mintbutton.style';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
@@ -13,7 +14,7 @@ import Portis from "@portis/web3";
 import Torus from "@toruslabs/torus-embed";
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 
 // Mainnet: 0xeb16a342412fa0fe674024e37d0924e2d18d2d26
@@ -144,7 +145,7 @@ const Banner = () => {
 			<div className="row">
 			<div className="col-lg-12">
 				<div className="lolbanner-con">
-			  <h2>Claim your Lordship</h2>
+				<h2>Claim your Guranted whitelisting vip pass! </h2>
 				
 				<h5>
 
@@ -155,8 +156,8 @@ const Banner = () => {
 					<span className="shape_left"><img src={sectionTitleShape2} alt=''/></span>
 				</h5>
 				<div className="vip-pass">
-                 <img src={Vippass} alt="" />
-            </div>
+					<img src={vippass} alt="" />
+				</div>
 				</div>
 				{mintNftButton()}
 				
