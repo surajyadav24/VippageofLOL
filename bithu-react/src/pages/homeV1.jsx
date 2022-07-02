@@ -11,10 +11,8 @@ import Layout from "../common/layout";
 // import MintNowModal from "../common/modal/mintNowModal";
 // import WalletModal from "../common/modal/walletModal/WalletModal";
 import Banner from "../components/section/banner/v1";
-import Cabout from "../components/section/customAbout/Cabout";
 // import Smartcontract from "../components/section/smartcontract/Smartcontract";
 const Footer = loadable(() => import('../components/section/footer/v1'))
-const About = loadable(() => import('../components/section/about/v1'))
 const HomeV1 = () => {
   const { visibility, walletModalvisibility } = useModal();
   return (
@@ -24,9 +22,6 @@ const HomeV1 = () => {
       {walletModalvisibility && <WalletModal />} */}
       <Header />
       <Banner />
-    
-    
-      <About />
       <Footer />
     </Layout>
   );
