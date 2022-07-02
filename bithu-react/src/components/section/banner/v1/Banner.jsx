@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import Web3 from 'web3';
+import React, {useState} from 'react';
 import {ABI} from './ABI'; 
 import { ethers } from 'ethers';
 import vippass from "../../../../assets/images/vippass/vippass.png"
@@ -12,10 +11,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import Portis from "@portis/web3";
 import Torus from "@toruslabs/torus-embed";
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import {useSnackbar} from 'notistack';
 
 // Mainnet: 0xeb16a342412fa0fe674024e37d0924e2d18d2d26
 // Rinkeby: 0x986bFa12850fe12a28b4A56558a41362da3DF284
